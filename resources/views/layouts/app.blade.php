@@ -65,7 +65,7 @@
                                 <a class="dropdown-item" href="{{ action('PostController@create') }}">
                                     {{ __('投稿') }}
                                 </a>
-                                <a class="dropdown-item" href="{{ action('PostController@userView', Auth::user()->id)}}">
+                                <a class="dropdown-item" href="{{ action('UserMenuController@postsView', Auth::user()->id)}}">
                                     {{ __('投稿一覧') }}
                                 </a>
 
@@ -80,7 +80,6 @@
                                                  document.getElementById('logout-form').submit();">
                                     {{ __('ログアウト') }}
                                 </a>
-
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf

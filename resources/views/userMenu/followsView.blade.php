@@ -1,11 +1,12 @@
 @extends('layouts.userLayouts')
 
-@section('content')
+@section('subContent')
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="container">
         <div class="row justify-content-between">
+
         @foreach($users as $user)
           <div class="card col-lg-5 mb-3 container">
             <div class="card-header row justify-content-between">
@@ -33,14 +34,6 @@
               {{$user->name}}
             </div>
 
-  {{--
-            <div class="card-body">
-              <span class="like" data-meshilog-id="{{$meshilog->id}}">
-                <i class="text-danger {{$likeClass}} fa-heart"><small>{{$meshilog->like_sum}}</small></i>
-                <p class="arrow_box">{{$likeDo}}</p>
-              </span>
-            </div>
-  --}}
           </div>
         @endforeach
         </div>
@@ -52,6 +45,6 @@
 </style>
 @endsection
 
-@section('foot')
+@section('subFoot')
 <script type="text/javascript" src="/js/follows/followAddTake.js"></script>
-@endsection('foot')
+@endsection
