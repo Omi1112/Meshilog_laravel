@@ -16,7 +16,7 @@ $(function() {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           type:"POST",
-          url:"/home/like/" + flagAddTake,
+          url:"/like/" + flagAddTake,
           data:{
             'meshilogId': likeThis.data('meshilogId')
           }

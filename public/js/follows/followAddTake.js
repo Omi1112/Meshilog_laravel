@@ -14,7 +14,7 @@ $(function() {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           type:"POST",
-          url:"/home/follow/" + flagAddTake,
+          url:"/follow/" + flagAddTake,
           data:{
             'followId': followThis.data('followId')
           }

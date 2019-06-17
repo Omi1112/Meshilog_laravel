@@ -15,12 +15,6 @@ use App\Http\Requests\MeshilogRequest;
 
 define("NAVTHIS", "user-nav-item-this");
 
-class DayAndPost
-{
-  public $day;
-  public $meshilog;
-}
-
 class UserMenuController extends Controller
 {
   public $navThisArray = array(
@@ -53,14 +47,6 @@ class UserMenuController extends Controller
       ->with('meshilogs',$meshilogs)
       ->with('navThisArray',$this->navThisArray)
       ->with('thisUser',$thisUser);
-  }
-
-  public function dayPosts(Request $request){
-    $meshilogs = Meshilog::where('user_id', $request->userId)
-      ->where('meal_date', $request->date)->get();
-
-    return view('posts.ajax.dayPosts')
-      ->with('meshilogs', $meshilogs);
   }
 
   public function calendarView($userId){

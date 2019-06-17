@@ -13,7 +13,7 @@ $(function() {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           type:"POST",
-          url:"/home/posts/dayPosts",
+          url:"/posts/dayPosts",
           data:{
             'userId': modalOpen.data('userId'),
             'date': modalOpen.data('date')

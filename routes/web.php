@@ -31,23 +31,17 @@ Route::post('/home/user/profile/update', 'UserController@profileUpdate');
 Route::get('/home/users', 'UserController@usersView');
 
 // ユーザメニュー
-Route::get('/home/user/{userId}/posts', 'UserMenuController@postsView');
-Route::get('/home/user/{userId}/calendar', 'UserMenuController@calendarView');
-Route::get('/home/user/{userId}/follows', 'UserMenuController@followsView');
-Route::get('/home/user/{userId}/followers', 'UserMenuController@followersView');
-Route::get('/home/user/{userId}/likes', 'UserMenuController@likesView');
+Route::get('/user/{userId}/posts', 'UserMenuController@postsView');
+Route::get('/user/{userId}/calendar', 'UserMenuController@calendarView');
+Route::get('/user/{userId}/follows', 'UserMenuController@followsView');
+Route::get('/user/{userId}/followers', 'UserMenuController@followersView');
+Route::get('/user/{userId}/likes', 'UserMenuController@likesView');
 
-Route::post('/home/posts/dayPosts', 'PostController@dayPosts');
 // Ajax
-Route::post('/home/like/add', 'LikeController@likeAdd');
-Route::post('/home/like/take', 'LikeController@likeTake');
+Route::post('/like/add', 'LikeController@likeAdd');
+Route::post('/like/take', 'LikeController@likeTake');
 
-Route::post('/home/follow/add', 'FollowController@followAdd');
-Route::post('/home/follow/take', 'FollowController@followTake');
+Route::post('/follow/add', 'FollowController@followAdd');
+Route::post('/follow/take', 'FollowController@followTake');
 
-Route::post('/home/posts/dayPosts', 'PostController@dayPosts');
-
-
-Route::get('/{test}', function ($test) {
-    return 'Hello World' . $test;
-});
+Route::post('/posts/dayPosts', 'PostController@dayPosts');
