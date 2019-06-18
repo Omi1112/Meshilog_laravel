@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/timeline/item/get', 'HomeController@getTimeLine');
+// Route::get('/home/timeline/item/get', 'HomeController@getTimeLine');
 Route::get('/home/post', 'PostController@create');
 Route::post('/home/post/store', 'PostController@store');
 
@@ -47,3 +47,4 @@ Route::post('/follow/add', 'FollowController@followAdd');
 Route::post('/follow/take', 'FollowController@followTake');
 
 Route::post('/posts/dayPosts', 'PostController@dayPosts');
+Route::get('/posts/getTimeline', 'PostController@getTimeLine');

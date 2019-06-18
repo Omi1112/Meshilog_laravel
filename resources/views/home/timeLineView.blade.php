@@ -17,14 +17,13 @@
   </div>
   <div id="loading">
     Now Loading...
-    <a id="next-url" href="{{action('HomeController@getTimeLine')}}"></a>
+    <a id="next-url" href="{{action('PostController@getTimeLine')}}"></a>
   </div>
 </div>
 
 @endsection
 
 @section('foot')
-<script type="text/javascript" src="/js/likes/likeAddTake.js"></script>
+<script type="text/javascript" src="/js/infinityScroll.js"></script>
 <script type="text/javascript" src="/js/home/timeLineLoad.js"></script>
-
 @endsection

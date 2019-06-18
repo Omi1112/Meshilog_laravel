@@ -1,10 +1,6 @@
 $(function(){
   more();
-  var hi= $(document).height();
-  console.log(hi);
   $(window).scroll(function() {
-    var hi= $(document).height();
-    console.log(hi);
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
           more();
     }
@@ -22,7 +18,6 @@ $(function(){
     .done(function(data) {
       $(data.cardData).appendTo('#cards').hide().fadeIn(1000);
       $('#next-url').attr('href', data.nextPageUrl);
-      console.log(data.nextPageUrl);
     })
     .fail(function(data) {
         alert(data.responseJSON);
