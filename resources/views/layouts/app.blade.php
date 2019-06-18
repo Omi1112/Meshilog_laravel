@@ -12,6 +12,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!--jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -66,11 +69,7 @@
                                     {{ __('投稿') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ action('UserMenuController@postsView', Auth::user()->id)}}">
-                                    {{ __('投稿一覧') }}
-                                </a>
-
-                                <a class="dropdown-item" href="{{ action('PostController@userCalendarView', Auth::user()->id)}}">
-                                    {{ __('カレンダー') }}
+                                    {{ __('マイメニュー') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ action('UserController@profileView')}}">
                                     {{ __('プロフィール') }}
@@ -97,6 +96,5 @@
         </main>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 @yield('foot')
 </html>

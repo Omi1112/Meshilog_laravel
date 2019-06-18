@@ -112,3 +112,19 @@ textarea{
 .user-nav-item-this{
 	border-bottom: solid 1px #00BFFF;
 }
+
+#loading{
+	display: none;
+}
+
+.user-header{
+	position: relative;
+}
+
+.user-header a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width: 100%;
+}

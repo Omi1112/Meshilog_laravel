@@ -18,17 +18,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/timeline/item/get', 'HomeController@getTimeLine');
 Route::get('/home/post', 'PostController@create');
 Route::post('/home/post/store', 'PostController@store');
-Route::get('/home/posts/{userId}', 'PostController@userView')
-  ->where('userId', '[0-9]+');
-Route::get('/home/posts/calendar/{userId}', 'PostController@userCalendarView')
-  ->where('userId', '[0-9]+');
 
+// Route::get('/home/posts/{userId}', 'PostController@userView')
+//   ->where('userId', '[0-9]+');
+// Route::get('/home/posts/calendar/{userId}', 'PostController@userCalendarView')
+//   ->where('userId', '[0-9]+');
+//
 Route::get('/home/user/profile', 'UserController@profileView');
 Route::post('/home/user/profile/update', 'UserController@profileUpdate');
-
-Route::get('/home/users', 'UserController@usersView');
+//
+// Route::get('/home/users', 'UserController@usersView');
 
 // ユーザメニュー
 Route::get('/user/{userId}/posts', 'UserMenuController@postsView');
