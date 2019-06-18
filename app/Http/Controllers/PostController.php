@@ -113,6 +113,44 @@ class PostController extends Controller
       return response()->json($data);
     }
 
+    public function getUserPosts($userId){
+      $meshilogs = DB::table('meshilogs')
+        ->select('meshilogs.id','meshilogs.user_id', 'meshilogs.title', 'meshilogs.body', 'meshilogs.img_path', 'meshilogs.like_sum', 'users.name as user_name', 'users.img_path as user_img_path', 'likes.meshilog_id')
+        ->leftJoin('likes', function($join){
+          $join->on('meshilogs.id', '=', 'likes.meshilog_id')
+            ->where('likes.user_id', '=', Auth::user()->id);
+        })
+        ->join('users', 'meshilogs.user_id', '=', 'users.id')
+        ->where('meshilogs.user_id', $userId)
+        ->paginate(9);
+
+      $data['nextPageUrl'] = $meshilogs->nextPageUrl();
+      $data['cardData'] = view('posts.ajax.postsView')->with('meshilogs', $meshilogs)->render();
+
+      return response()->json($data);
+    }
+
+    public function getUserLikes($userId){
+      $meshilogs = DB::table('meshilogs')
+      ->select('meshilogs.id','meshilogs.user_id', 'meshilogs.title', 'meshilogs.body', 'meshilogs.img_path', 'meshilogs.like_sum', 'users.name as user_name', 'users.img_path as user_img_path', 'myLikes.meshilog_id')
+        ->leftJoin('likes as myLikes', function($join){
+          $join->on('meshilogs.id', '=', 'myLikes.meshilog_id')
+            ->where('myLikes.user_id', '=', Auth::user()->id);
+        })
+        ->join('users', 'meshilogs.user_id', '=', 'users.id')
+        ->join('likes', function($join) use($userId){
+          $join->on('meshilogs.id', '=', 'likes.meshilog_id')
+            ->where('likes.user_id', '=', $userId);
+        })
+        ->paginate(9);
+
+      $data['nextPageUrl'] = $meshilogs->nextPageUrl();
+      $data['cardData'] = view('posts.ajax.postsView')->with('meshilogs', $meshilogs)->render();
+
+      return response()->json($data);
+    }
+
+
     public function dayPosts(Request $request){
       $meshilogs = Meshilog::where('user_id', $request->userId)
         ->where('meal_date', $request->date)->get();

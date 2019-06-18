@@ -35,16 +35,16 @@ class UserMenuController extends Controller
     $this->navThisArray['posts'] = NAVTHIS;
     $thisUser = User::find($userId);
 
-    $meshilogs = DB::table('meshilogs')
-      ->leftJoin('likes', function($join){
-        $join->on('meshilogs.id', '=', 'likes.meshilog_id')
-          ->where('likes.user_id', '=', Auth::user()->id);
-      })
-      ->where('meshilogs.user_id', $userId)
-      ->get();
+    // $meshilogs = DB::table('meshilogs')
+    //   ->leftJoin('likes', function($join){
+    //     $join->on('meshilogs.id', '=', 'likes.meshilog_id')
+    //       ->where('likes.user_id', '=', Auth::user()->id);
+    //   })
+    //   ->where('meshilogs.user_id', $userId)
+    //   ->get();
 
     return view('userMenu.postsView')
-      ->with('meshilogs',$meshilogs)
+      // ->with('meshilogs',$meshilogs)
       ->with('navThisArray',$this->navThisArray)
       ->with('thisUser',$thisUser);
   }
@@ -155,21 +155,7 @@ class UserMenuController extends Controller
     $this->navThisArray['likes'] = NAVTHIS;
     $thisUser = User::find($userId);
 
-    $meshilogs = DB::table('meshilogs')
-    ->select('meshilogs.id', 'meshilogs.title', 'meshilogs.body', 'meshilogs.img_path', 'meshilogs.like_sum', 'myLikes.meshilog_id')
-      ->leftJoin('likes as myLikes', function($join){
-        $join->on('meshilogs.id', '=', 'myLikes.meshilog_id')
-          ->where('myLikes.user_id', '=', Auth::user()->id);
-      })
-      ->join('likes', function($join) use($userId){
-        $join->on('meshilogs.id', '=', 'likes.meshilog_id')
-          ->where('likes.user_id', '=', $userId);
-      })
-      ->where('meshilogs.user_id', $userId)
-      ->get();
-
-    return view('userMenu.postsView')
-      ->with('meshilogs',$meshilogs)
+    return view('userMenu.likesView')
       ->with('navThisArray',$this->navThisArray)
       ->with('thisUser',$thisUser);
   }

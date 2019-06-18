@@ -48,3 +48,5 @@ Route::post('/follow/take', 'FollowController@followTake');
 
 Route::post('/posts/dayPosts', 'PostController@dayPosts');
 Route::get('/posts/getTimeline', 'PostController@getTimeLine');
+Route::get('/posts/{userId}/getUserPosts', 'PostController@getUserPosts');
+Route::get('/posts/{userId}/getUserLikes', 'PostController@getUserLikes');

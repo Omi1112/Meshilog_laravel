@@ -1,5 +1,5 @@
 @foreach($meshilogs as $meshilog)
-<div class="col-md-4 mb-2">
+<div class="col-lg-4 mb-2">
 
   <div class="card">
     <div class="card-header bg-primary user-header">
