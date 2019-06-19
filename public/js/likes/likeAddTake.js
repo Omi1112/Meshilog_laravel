@@ -1,6 +1,6 @@
 $(function() {
     //アイコンをクリックしたら
-    $(".container").on('click', '.like', function() {
+    $("body").on('click', '.like', function() {
         //いいねを実行
         var likeThis = $(this);
         var likeHeart = likeThis.find('.fa-heart')

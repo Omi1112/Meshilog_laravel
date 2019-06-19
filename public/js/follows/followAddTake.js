@@ -1,6 +1,6 @@
 $(function() {
     //アイコンをクリックしたら
-    $(".follow").click(function() {
+    $("body").on('click', '.follow', function() {
 
         //いいねを実行
         var followThis = $(this);

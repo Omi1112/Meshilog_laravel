@@ -34,6 +34,12 @@
           <a href="{{action('UserMenuController@likesView', $thisUser->id)}}"></a>
         </div>
       </div>
+      <div class="row mt-2">
+        <div class="col-6">
+          <button type="button" class="btn follow {{$followClass}}" data-follow-id="{{$thisUser->id}}">{{$followDo}}</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -42,5 +48,6 @@
 @endsection
 
 @section('foot')
+<script type="text/javascript" src="/js/follows/followAddTake.js"></script>
 @yield('subFoot')
 @endsection
