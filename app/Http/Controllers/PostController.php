@@ -42,16 +42,6 @@ class PostController extends Controller
      */
     public function create()
     {
-      $test = new DayAndPost();
-      $test->day = 10;
-      $test->post = 'test';
-      // $tests[];
-      for($i=1; $i <= 10; $i++) {
-        $test = new DayAndPost();
-        $test->day = $i;
-        $test->post = 'test' . $i;
-        $tests[] = $test;
-      }
       return view('posts.create');
     }
 
