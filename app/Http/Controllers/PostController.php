@@ -106,7 +106,7 @@ class PostController extends Controller
           $join->on('meshilogs.user_id', '=', 'follows.follow_id')
             ->where('follows.user_id', '=', Auth::user()->id);
         })
-        ->paginate(10);
+        ->paginate(9);
       $data['nextPageUrl'] = $meshilogs->nextPageUrl();
       $data['cardData'] = view('posts.ajax.postsView')->with('meshilogs', $meshilogs)->render();
 
