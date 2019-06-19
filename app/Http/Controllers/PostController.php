@@ -59,9 +59,6 @@ class PostController extends Controller
         $path = str_replace('public/meshiimg/', '', $path);
       }
 
-      \Debugbar::info('$path='.$path);   // ロギング
-
-      // ログインユーザ取得
       $user = Auth::user();
 
       // Postデータ取得
@@ -71,11 +68,6 @@ class PostController extends Controller
       $meshilog->img_path = $path;
       $meshilog->meal_timing = $request->meal_timing;
       $meshilog->meal_date = $request->meal_date;
-
-      \Debugbar::info('$request='.$request);      // ロギング
-      \Debugbar::info('$user='.$user);            // ロギング
-      \Debugbar::info('$meshilog='.$meshilog);    // ロギング
-
 
       // DBへデータ格納
       $user->meshilogs()->save($meshilog);
