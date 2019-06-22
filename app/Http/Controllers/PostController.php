@@ -114,7 +114,7 @@ class PostController extends Controller
 
     public function getUserLikes($userId){
       $meshilogs = DB::table('meshilogs')
-      ->select('meshilogs.id','meshilogs.user_id', 'meshilogs.title', 'meshilogs.body', 'meshilogs.img_path', 'meshilogs.like_sum', 'users.name as user_name', 'users.img_path as user_img_path', 'myLikes.meshilog_id')
+        ->select('meshilogs.id','meshilogs.user_id', 'meshilogs.title', 'meshilogs.body', 'meshilogs.img_path', 'meshilogs.like_sum', 'users.name as user_name', 'users.img_path as user_img_path', 'myLikes.meshilog_id')
         ->leftJoin('likes as myLikes', function($join){
           $join->on('meshilogs.id', '=', 'myLikes.meshilog_id')
             ->where('myLikes.user_id', '=', Auth::user()->id);
@@ -128,6 +128,72 @@ class PostController extends Controller
 
       $data['nextPageUrl'] = $meshilogs->nextPageUrl();
       $data['cardData'] = view('posts.ajax.postsView')->with('meshilogs', $meshilogs)->render();
+
+      return response()->json($data);
+    }
+
+    public function getUserCalendar(Request $request, $userId){
+
+      // 日付(今月を取得)
+      $year = $request->year;
+      \Debugbar::info($year);   // ロギング
+      $month = $request->month;
+      $dateStr = sprintf('%04d-%02d-01', $year, $month);
+      $date = new Carbon($dateStr);
+
+      $data['previousYear'] = $date->copy()->subMonth()->year;
+      $data['previousMonth'] = $date->copy()->subMonth()->month;
+      $data['currentYear'] = $date->copy()->year;
+      $data['currentMonth'] = $date->copy()->month;
+      $data['nextYear'] = $date->copy()->addMonth()->year;
+      $data['nextMonth'] = $date->copy()->addMonth()->month;
+
+      // カレンダーを四角形にするため、前月となる左上の隙間用のデータを入れるためずらす
+      $date->subDay($date->dayOfWeek);
+      $count = 42;
+      $dates = [];
+      $startDay = $date->copy();
+      $endDay = $date->copy()->addDay($count);
+
+      // 日付ごとの最新更新データを１件づつ取得する。
+      $meshilogs = DB::select('
+        select m1.id,  m1.title , m1.body, m1.meal_date, m1.img_path
+        from meshilogs as m1
+        where
+         m1.user_id = ? and
+         m1.meal_date between ? and ? and
+         m1.id =(
+           select m2.id
+           From meshilogs as m2
+           Where m1.meal_date = m2.meal_date
+           order by updated_at desc
+           limit 1
+         )
+        order by meal_date asc',
+        [$userId, $startDay->format('Y-m-d'), $endDay->format('Y-m-d')]
+      );
+
+      // 投稿と日付をマージ
+      $meshilogCnt = 0;
+      for ($i = 0; $i < $count; $i++, $date->addDay()) {
+        $dateObj = new DayAndPost();
+        $dateObj->day = $date->copy();
+
+        // マージ判定
+        if($meshilogCnt < count($meshilogs)){
+          if($dateObj->day->format('Y-m-d') == $meshilogs[$meshilogCnt]->meal_date){
+            $dateObj->post = $meshilogs[$meshilogCnt];
+            $meshilogCnt++;
+          }
+        }
+        $dates[] = $dateObj;
+      }
+
+      $data['calendarData'] = view('posts.ajax.calendarView')
+        ->with('dates', $dates)
+        ->with('userId', $userId)
+        ->with('currentMonth', $request->month)
+        ->render();
 
       return response()->json($data);
     }

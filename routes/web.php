@@ -50,6 +50,8 @@ Route::post('/posts/dayPosts', 'PostController@dayPosts');
 Route::get('/posts/getTimeline', 'PostController@getTimeLine');
 Route::get('/posts/{userId}/getUserPosts', 'PostController@getUserPosts');
 Route::get('/posts/{userId}/getUserLikes', 'PostController@getUserLikes');
+Route::post('/posts/{userId}/getCalendar', 'PostController@getUserCalendar');
+
 
 Route::get('/posts/{userId}/getUserFollows', 'UserController@getUserFollows');
 Route::get('/posts/{userId}/getUserFollowers', 'UserController@getUserFollowers');

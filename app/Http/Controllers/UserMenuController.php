@@ -70,61 +70,10 @@ class UserMenuController extends Controller
   }
 
   public function calendarView($userId){
+    $this->setUserData($userId);
     $this->navThisArray['calendar'] = NAVTHIS;
-    $thisUser = User::find($userId);
 
-    // 日付(今月を取得)
-    $year = Carbon::today()->year;
-    $month = Carbon::today()->month;
-    $dateStr = sprintf('%04d-%02d-01', $year, $month);
-    $date = new Carbon($dateStr);
-
-    // カレンダーを四角形にするため、前月となる左上の隙間用のデータを入れるためずらす
-    $date->subDay($date->dayOfWeek);
-    $count = 42;
-    $dates = [];
-    $startDay = $date->copy();
-    $endDay = $date->copy()->addDay($count);
-
-    // 日付ごとの最新更新データを１件づつ取得する。
-    $meshilogs = DB::select('
-      select m1.id,  m1.title , m1.body, m1.meal_date, m1.img_path
-      from meshilogs as m1
-      where
-       m1.user_id = ? and
-       m1.meal_date between ? and ? and
-       m1.id =(
-         select m2.id
-         From meshilogs as m2
-         Where m1.meal_date = m2.meal_date
-         order by updated_at desc
-         limit 1
-       )
-      order by meal_date asc',
-      [$userId, $startDay->format('Y-m-d'), $endDay->format('Y-m-d')]
-    );
-
-    // 投稿と日付をマージ
-    $meshilogCnt = 0;
-    for ($i = 0; $i < $count; $i++, $date->addDay()) {
-      $dateObj = new DayAndPost();
-      $dateObj->day = $date->copy();
-
-      // マージ判定
-      if($meshilogCnt < count($meshilogs)){
-        if($dateObj->day->format('Y-m-d') == $meshilogs[$meshilogCnt]->meal_date){
-          $dateObj->post = $meshilogs[$meshilogCnt];
-          $meshilogCnt++;
-        }
-      }
-      $dates[] = $dateObj;
-    }
-
-    return view('userMenu.calendarView')
-          ->with('dates',$dates)
-          ->with('currentMonth', $month)
-          ->with('navThisArray',$this->navThisArray)
-          ->with('thisUser',$thisUser);
+    return $this->returnCreate('userMenu.calendarView');
   }
 
   public function followsView($userId){

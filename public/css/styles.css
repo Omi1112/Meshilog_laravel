@@ -128,3 +128,7 @@ textarea{
     height:100%;
     width: 100%;
 }
+
+.get-calendar{
+	cursor: pointer;
+}

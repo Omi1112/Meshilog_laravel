@@ -1,8 +1,7 @@
 //modal
 $(function() {
     //カレンダーをクリックしたら
-    $(".modal-open").click(function() {
-
+    $("body").on("click", ".modal-open", function() {
         //モーダルウィンドウを表示
         $("#modal-bg,#modal-main").fadeIn("first");
 
